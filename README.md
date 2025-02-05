@@ -22,7 +22,7 @@ front/
 ├── vite.config.js      # Vite Configuration
 └── README.md           # Project Documentation
 ```
-### **Frontend (`front/`)**  
+### **Backend (`server/`)**  
 ```bash
 server/
 ├── node_modules/         # Dependencies
