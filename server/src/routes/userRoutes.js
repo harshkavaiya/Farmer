@@ -17,7 +17,7 @@ router.post("/userSignup",async (req,res)=>{
             })
         }
     
-        const hashedPassword = bcryptjs.hash(password,10)
+        const hashedPassword = await bcryptjs.hash(password,10)
     
         await UserModel.create({
             name:name,
