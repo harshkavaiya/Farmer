@@ -8,6 +8,7 @@ import {
 import FarmerReg from "./Pages/FarmerReg";
 import Home from "./Pages/Home";
 import Mainlayout from "./Layout/Mainlayout";
+import UserReg from "./Pages/userReg";
 
 const App = () => {
   const appRouter = createBrowserRouter([
@@ -25,6 +26,11 @@ const App = () => {
       path: "/farmer-signup",
       element: <FarmerReg />,
     },
+    {
+      path:"/userSignup",
+      element:<UserReg/>
+      
+    }
   ]);
   return (
     <main>
