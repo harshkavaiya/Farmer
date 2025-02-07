@@ -12,6 +12,11 @@ const farmerSchema = new mongoose.Schema(
     state: { type: String, required: true },
     city: { type: String, required: true },
     pincode: { type: String, required: true },
+    status: {
+      type: String,
+      enum: ["verified", "pending", "unverified"],
+      default: "unverified",
+    },
     land: {
       size: { type: String },
       surveyNo: { type: String },

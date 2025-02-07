@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import useAuthStore from "../store/useAuthStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const FarmerReg = () => {
   const { register, handleSubmit, watch, setValue } = useForm({
@@ -24,12 +24,12 @@ const FarmerReg = () => {
       },
     },
   });
-
+  const navigate = useNavigate();
   const { FarmerSignup } = useAuthStore.getState();
 
   const onSubmit = (data) => {
     console.log("Form Data:", data);
-    FarmerSignup(data);
+    FarmerSignup(data, navigate);
   };
 
   return (
@@ -152,7 +152,9 @@ const FarmerReg = () => {
             </select>
           </div>
         </div>
-        <Link to="/farmer-signin"></Link>
+        <Link to="/farmer-signin" className="text-green-500">
+          Sign in
+        </Link>
         <button type="submit" className="w-full bg-green-700">
           Sign Up
         </button>

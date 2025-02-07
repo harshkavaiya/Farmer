@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuthStore from "../store/useAuthStore";
 
 const FarmerLogin = () => {
   const { register, handleSubmit, watch } = useForm({
@@ -9,9 +10,12 @@ const FarmerLogin = () => {
       password: "",
     },
   });
+  const navigate = useNavigate();
+  const { FarmerLogin } = useAuthStore.getState();
 
   const onSubmit = (data) => {
     console.log("Login Data:", data);
+    FarmerLogin(data, navigate);
   };
 
   return (

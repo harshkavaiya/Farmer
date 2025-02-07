@@ -47,8 +47,6 @@ export const registerFarmer = async (req, res) => {
 
     await newFarmer.save();
 
-    generateToken(newFarmer._id, res);
-
     res
       .status(201)
       .json({ success: true, message: "Farmer registered successfully!" });
@@ -60,10 +58,10 @@ export const registerFarmer = async (req, res) => {
 
 export const loginFarmer = async (req, res) => {
   try {
-    const { phone, email, password } = req.body;
+    const { identifier, password } = req.body;
 
     const existingFarmer = await Farmer.findOne({
-      $or: [{ phone }, { email }],
+      $or: [{ phone: identifier }, { email: identifier }],
     });
 
     if (!existingFarmer) {
@@ -103,5 +101,14 @@ export const loginFarmer = async (req, res) => {
       success: false,
       message: "Server error",
     });
+  }
+};
+
+export const checkAuth = (req, res) => {
+  try {
+    res.status(200).json({ success: true, farmerDetails: req.farmer });
+  } catch (error) {
+    console.log("error in checkAuth controller: ", error.message);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
