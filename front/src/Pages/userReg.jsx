@@ -1,8 +1,6 @@
 import React from 'react'
-import axios from "axios"
-
-
 import { useForm } from 'react-hook-form'
+import useAuthStore from '../store/useAuthStore'
 
 
 
@@ -13,17 +11,14 @@ const UserReg = () => {
     handleSubmit,
   formState:{errors}, 
   }=useForm()
+
+  const {UserSignUp} = useAuthStore.getState()
   
   const onsubmit = (data) => {
     console.log(data)
+    UserSignUp(data)
 
-    axios.post("http://localhost:5000/api/auth/userSignup",data)
-    .then(user => {
-      console.log(user)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+ 
   }
   return (
     <div>

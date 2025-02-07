@@ -31,12 +31,12 @@ router.post("/userSignup",async (req,res)=>{
             address:address,
             })
     
-            res.status(201).json({message:"user signup success"})
+            res.status(201).json({message:"user signup success",success:true})
     
         }
         catch(error){
         console.log(error)
-        res.status(500).json({message:"server error"})
+        res.status(500).json({message:"server error",success:false})
         }
 })
 
