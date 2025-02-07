@@ -6,7 +6,7 @@ const farmerSchema = new mongoose.Schema(
     phone: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     address: { type: String, required: true },
-    certificate: { type: String, required: true },
+    certificate: { type: String },
     password: { type: String, required: true },
     country: { type: String, required: true },
     state: { type: String, required: true },
@@ -14,6 +14,7 @@ const farmerSchema = new mongoose.Schema(
     pincode: { type: String, required: true },
     land: {
       size: { type: String },
+      surveyNo: { type: String },
       type: { type: String },
       own: { type: String },
     },

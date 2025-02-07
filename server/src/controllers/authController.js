@@ -18,9 +18,15 @@ export const registerFarmer = async (req, res) => {
       land,
     } = req.body;
 
-    const existingFarmer = await Farmer.findOne({ phone });
+    const existingFarmer = await Farmer.findOne({
+      $or: [{ phone }, { email }],
+    });
+
     if (existingFarmer) {
-      return res.status(400).json({ message: "Farmer already registered!" });
+      return res.status(200).json({
+        success: false,
+        message: "Farmer with this phone or email already exists!",
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -43,9 +49,59 @@ export const registerFarmer = async (req, res) => {
 
     generateToken(newFarmer._id, res);
 
-    res.status(201).json({ message: "Farmer registered successfully!" });
+    res
+      .status(201)
+      .json({ success: true, message: "Farmer registered successfully!" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+export const loginFarmer = async (req, res) => {
+  try {
+    const { phone, email, password } = req.body;
+
+    const existingFarmer = await Farmer.findOne({
+      $or: [{ phone }, { email }],
+    });
+
+    if (!existingFarmer) {
+      return res.status(200).json({
+        success: false,
+        message: "Farmer not found!",
+      });
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      existingFarmer.password
+    );
+
+    if (!isPasswordValid) {
+      return res.status(200).json({
+        success: false,
+        message: "Invalid credentials!",
+      });
+    }
+
+    generateToken(existingFarmer._id, res);
+
+    res.status(200).json({
+      success: true,
+      message: "Login successful!",
+      farmer: {
+        id: existingFarmer._id,
+        name: existingFarmer.name,
+        phone: existingFarmer.phone,
+        email: existingFarmer.email,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 };
