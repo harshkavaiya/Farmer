@@ -71,6 +71,22 @@ const useAuthStore = create((set, get) => ({
       console.log("error in farmer-checkauth : ", error);
     }
   },
+  UserSignUp: async (data) => {
+    try {
+      let res = await AxiosInstance.post("/api/auth/userSignup", data);
+
+      if (res.data.success) {
+        alert(res.data.message);
+        console.log(res.data);
+        set({ authUser: res.data, isLogin: true });
+      } else {
+        alert(res.data.message);
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.log("error while userSignup", error);
+    }
+  },
 }));
 
 export default useAuthStore;

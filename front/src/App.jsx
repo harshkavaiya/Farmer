@@ -8,7 +8,6 @@ import FarmerReg from "./Pages/FarmerReg";
 import FarmerLogin from "./Pages/FarmerLogin";
 import Home from "./Pages/Home";
 import Mainlayout from "./Layout/Mainlayout";
-import ProtectRoute from "./lib/ProtectRoute";
 import useAuthStore from "./store/useAuthStore";
 
 const App = () => {
@@ -36,6 +35,10 @@ const App = () => {
     {
       path: "/farmer-signin",
       element: isLogin ? <Navigate to="/" /> : <FarmerLogin />,
+    },
+    {
+      path: "/userReg",
+      element: <UserReg />,
     },
   ]);
   return (
